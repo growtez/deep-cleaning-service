@@ -1,49 +1,85 @@
-// Navigation functionality
 document.addEventListener('DOMContentLoaded', function() {
-    // Navigation scroll effect
-    let isScrolled = false;
-    const nav = document.querySelector('nav');
-    
+
+    // --- 1. Sticky Navbar ---
+    const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
-        if (window.scrollY > 20 && !isScrolled) {
-            nav.classList.add('bg-white/95', 'backdrop-blur-md', 'shadow-lg');
-            isScrolled = true;
-        } else if (window.scrollY <= 20 && isScrolled) {
-            nav.classList.remove('bg-white/95', 'backdrop-blur-md', 'shadow-lg');
-            isScrolled = false;
-        }
-    });
-
-    // Mobile menu functionality
-    const menuButton = document.querySelector('#menuButton');
-    const mobileMenu = document.querySelector('#mobileMenu');
-    let isOpen = false;
-
-    menuButton?.addEventListener('click', () => {
-        isOpen = !isOpen;
-        if (isOpen) {
-            mobileMenu?.classList.remove('hidden');
-            menuButton.innerHTML = '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>';
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
         } else {
-            mobileMenu?.classList.add('hidden');
-            menuButton.innerHTML = '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/></svg>';
+            navbar.classList.remove('scrolled');
         }
     });
 
-    // Smooth scrolling for navigation links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            target?.scrollIntoView({
-                behavior: 'smooth'
-            });
-            // Close mobile menu if open
-            if (isOpen) {
-                mobileMenu?.classList.add('hidden');
-                isOpen = false;
-                menuButton.innerHTML = '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/></svg>';
-            }
-        });
+    // --- 2. Mobile Menu Toggle ---
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileLinks = document.querySelectorAll('.mobile-link');
+    const body = document.body;
+
+    // Function to close the menu
+    function closeMenu() {
+        mobileMenu.classList.remove('active');
+        menuToggle.innerHTML = '<i class="fa-solid fa-bars"></i>'; // Change icon to 'bars'
+        body.style.overflow = 'auto'; // Re-enable scrolling
+    }
+    
+    // Function to open the menu
+    function openMenu() {
+        mobileMenu.classList.add('active');
+        menuToggle.innerHTML = '<i class="fa-solid fa-xmark"></i>'; // Change icon to 'close'
+        body.style.overflow = 'hidden'; // Disable scrolling
+    }
+
+    // Toggle menu on button click
+    menuToggle.addEventListener('click', () => {
+        if (mobileMenu.classList.contains('active')) {
+            closeMenu();
+        } else {
+            openMenu();
+        }
     });
+
+    // Close menu when a link is clicked
+    mobileLinks.forEach(link => {
+        link.addEventListener('click', closeMenu);
+    });
+
+    // --- 3. Testimonial Slider (Swiper.js) ---
+    const swiper = new Swiper('.testimonial-slider', {
+        // Optional parameters
+        loop: true,
+        autoplay: {
+            delay: 5000, // 5 seconds per slide
+            disableOnInteraction: false,
+        },
+        
+        // Pagination
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+
+        // Responsive breakpoints
+        slidesPerView: 1,
+        spaceBetween: 20,
+        breakpoints: {
+            // when window width is >= 640px
+            640: {
+                slidesPerView: 2,
+                spaceBetween: 30
+            },
+            // when window width is >= 1024px
+            1024: {
+                slidesPerView: 3,
+                spaceBetween: 30
+            }
+        }
+    });
+
+    // --- 4. Set Current Year in Footer ---
+    const yearSpan = document.getElementById('current-year');
+    if (yearSpan) {
+        yearSpan.textContent = new Date().getFullYear();
+    }
+
 });
