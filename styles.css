@@ -1,36 +1,29 @@
-/* SparkleClean Custom Stylesheet
-*/
-
-/* --- 1. Root Variables --- */
+/* Root Variables */
 :root {
-    --primary-color: #0284c7; /* Sky 600 */
-    --primary-dark: #0369a1; /* Sky 700 */
-    --primary-light: #e0f2fe; /* Sky 100 */
-
-    --secondary-color: #e11d48; /* Rose 600 */
+    --primary-color: #0284c7;
+    --primary-dark: #0369a1;
+    --primary-light: #e0f2fe;
+    --secondary-color: #ef4444;
     --gradient-primary: linear-gradient(135deg, #0ea5e9, #0284c7);
-    --gradient-hero: linear-gradient(135deg, #f0f9ff, #e0f2fe);
-    
-    --text-dark: #111827; /* Gray 900 */
-    --text-medium: #4b5563; /* Gray 600 */
-    --text-light: #f9fafb; /* Gray 50 */
-    
+    --gradient-hero-home: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+    --gradient-hero-auto: linear-gradient(135deg, #f3f4f6, #d1d5db);
+    --text-dark: #111827;
+    --text-medium: #4b5563;
+    --text-light: #f9fafb;
     --bg-white: #ffffff;
-    --bg-light: #f9fafb; /* Gray 50 */
-    --bg-dark: #111827; /* Gray 900 */
-    --border-color: #e5e7eb; /* Gray 200 */
-
+    --bg-light: #f9fafb;
+    --bg-dark: #111827;
+    --border-color: #e5e7eb;
     --font-inter: 'Inter', sans-serif;
     --font-display: 'Playfair Display', serif;
-
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
-    
-    --navbar-height: 4.5rem; /* 72px */
+    --navbar-height: 4.5rem;
+    /* New variable for the mobile tab bar height */
+    --mobile-tab-bar-height: 3.5rem; 
 }
 
-/* --- 2. Base Styles --- */
 * {
     margin: 0;
     padding: 0;
@@ -72,7 +65,6 @@ img {
     display: block;
 }
 
-/* --- 3. Utility Classes --- */
 .container {
     max-width: 1100px;
     margin: 0 auto;
@@ -122,7 +114,7 @@ img {
     color: var(--text-medium);
 }
 
-/* --- 4. Navbar --- */
+/* Navbar */
 .navbar {
     position: fixed;
     top: 0;
@@ -132,6 +124,7 @@ img {
     background-color: var(--bg-white);
     z-index: 1000;
     transition: all 0.3s ease;
+    border-bottom: 1px solid var(--border-color);
 }
 
 .navbar.scrolled {
@@ -144,12 +137,15 @@ img {
     align-items: center;
     justify-content: space-between;
     height: 100%;
+    gap: 1rem;
 }
 
 .logo {
     display: flex;
     align-items: center;
     gap: 0.75rem;
+    flex-shrink: 0;
+    z-index: 10;
 }
 
 .logo-icon-wrapper {
@@ -163,6 +159,7 @@ img {
     font-size: 1.25rem;
     box-shadow: var(--shadow-lg);
     transition: transform 0.3s ease;
+    flex-shrink: 0;
 }
 
 .logo:hover .logo-icon-wrapper {
@@ -187,14 +184,67 @@ img {
     color: var(--text-medium);
 }
 
+/* Service Tabs - Centered (Desktop) */
+.service-tabs-wrapper {
+    display: none; /* Hidden by default, shown on desktop */
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.service-tabs {
+    display: flex;
+    background-color: var(--bg-light);
+    border-radius: 999px;
+    padding: 0.35rem;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+}
+
+.service-tab-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-inter);
+    font-size: 0.875rem;
+    font-weight: 600;
+    padding: 0.5rem 1.25rem;
+    border-radius: 999px;
+    border: none;
+    background-color: transparent;
+    color: var(--text-medium);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.service-tab-btn i {
+    font-size: 1rem;
+}
+
+.service-tab-btn.active {
+    background-color: var(--bg-white);
+    color: var(--primary-dark);
+    box-shadow: var(--shadow-md);
+}
+
+.service-tab-btn:not(.active):hover {
+    background-color: #f3f4f6;
+    color: var(--text-dark);
+}
+
+/* Navigation Links (Desktop) */
 .nav-links {
-    display: none; /* Hidden on mobile by default */
+    display: none; /* Hidden by default, shown on desktop */
+    margin-left: auto;
 }
 
 .nav-link {
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 0.75rem;
     font-weight: 600;
     color: var(--text-medium);
+    font-size: 0.9rem;
+    white-space: nowrap;
 }
 
 .nav-link:hover {
@@ -202,35 +252,75 @@ img {
 }
 
 .nav-btn-desktop {
-    display: none; /* Hidden on mobile */
+    display: none; /* Hidden by default, shown on desktop */
 }
 
+/* Mobile Menu Toggle (Hamburger) */
 .menu-toggle {
-    display: block; /* Show on mobile */
+    display: flex;
     font-size: 1.5rem;
     background: none;
     border: none;
     color: var(--text-dark);
     cursor: pointer;
+    padding: 0.5rem;
+    z-index: 10;
 }
 
-/* Mobile Menu */
-.mobile-menu {
+/* New Mobile Tab Bar (Sticky) */
+.mobile-tab-bar {
     position: fixed;
-    top: var(--navbar-height);
+    top: var(--navbar-height); /* Position it right below the navbar */
     left: 0;
     width: 100%;
-    height: calc(100vh - var(--navbar-height));
+    height: var(--mobile-tab-bar-height); /* Use variable for height */
+    background-color: var(--bg-white);
+    z-index: 999; /* Below navbar (1000) but above content */
+    display: flex; /* Use flex to center content */
+    align-items: center;
+    padding: 0 1.5rem; /* Horizontal padding */
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+    transition: top 0.3s ease; /* For the scrolled transition */
+}
+
+.navbar.scrolled .mobile-tab-bar {
+    top: 4rem; /* Adjust when navbar shrinks */
+}
+
+.mobile-tab-bar .service-tabs {
+    width: 100%;
+    margin: 0 auto;
+    max-width: 400px;
+}
+
+.mobile-tab-bar .service-tab-btn {
+    flex: 1;
+    justify-content: center;
+    font-size: 0.875rem;
+    padding: 0.625rem 1rem;
+}
+
+/* Mobile Menu (Slide-in) */
+.mobile-menu {
+    position: fixed;
+    /* Positioned below BOTH navbar and mobile tab bar */
+    top: calc(var(--navbar-height) + var(--mobile-tab-bar-height));
+    left: 0;
+    width: 100%;
+    /* Adjusted height */
+    height: calc(100vh - var(--navbar-height) - var(--mobile-tab-bar-height));
     background-color: var(--bg-white);
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    padding: 2rem 1.5rem;
     gap: 1.5rem;
     transform: translateX(100%);
-    transition: transform 0.3s ease-in-out;
+    transition: transform 0.3s ease-in-out, top 0.3s ease; /* Added top transition */
     opacity: 0;
     visibility: hidden;
+    overflow-y: auto;
 }
 
 .mobile-menu.active {
@@ -239,34 +329,64 @@ img {
     visibility: visible;
 }
 
+/* Adjust mobile menu position when navbar is scrolled */
 .navbar.scrolled .mobile-menu {
-    top: 4rem; /* Adjust height when navbar is scrolled */
-    height: calc(100vh - 4rem);
+    top: calc(4rem + var(--mobile-tab-bar-height));
+    height: calc(100vh - 4rem - var(--mobile-tab-bar-height));
+}
+
+/* Service tabs are no longer in the mobile menu */
+.mobile-menu .service-tabs {
+    display: none; 
 }
 
 .mobile-link {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     font-weight: 600;
     color: var(--text-dark);
+    padding: 0.5rem;
+}
+
+.mobile-link:hover {
+    color: var(--primary-color);
 }
 
 .mobile-btn {
-    font-size: 1.25rem;
+    font-size: 1.125rem;
     padding: 1rem 2rem;
+    margin-top: 1rem;
 }
 
-/* --- 5. Hero Section --- */
+/* Content Toggling */
+.service-content-wrapper {
+    display: none;
+}
+
+.service-content-wrapper.active {
+    display: block;
+}
+
+/* Hero Section */
 .hero {
     min-height: 100vh;
     display: flex;
     align-items: center;
-    padding-top: var(--navbar-height);
-    background-image: var(--gradient-hero);
+    /* Adjusted padding-top to account for navbar AND mobile tab bar */
+    padding-top: calc(var(--navbar-height) + var(--mobile-tab-bar-height));
+}
+
+.hero-home {
+    background-image: var(--gradient-hero-home);
+}
+
+.hero-auto {
+    background-image: var(--gradient-hero-auto);
 }
 
 .hero-content {
     text-align: center;
     max-width: 700px;
+    padding: 2rem 0;
 }
 
 .hero-badge {
@@ -283,7 +403,7 @@ img {
 }
 
 .hero-title {
-    font-size: 3.5rem;
+    font-size: 2.5rem;
     line-height: 1.2;
     margin-bottom: 1.5rem;
 }
@@ -293,11 +413,10 @@ img {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    text-fill-color: transparent;
 }
 
 .hero-subtitle {
-    font-size: 1.25rem;
+    font-size: 1.125rem;
     color: var(--text-medium);
     margin-bottom: 2.5rem;
     max-width: 500px;
@@ -319,7 +438,7 @@ img {
 }
 
 .stat-number {
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: 700;
     color: var(--primary-color);
 }
@@ -330,7 +449,7 @@ img {
     font-weight: 500;
 }
 
-/* --- 6. Services Section --- */
+/* Services Section */
 .services-section {
     padding: 5rem 0;
     background-color: var(--bg-white);
@@ -380,14 +499,15 @@ img {
     color: var(--text-medium);
 }
 
-/* --- 7. About/Testimonial Section --- */
+/* Testimonial Section */
 .about-section {
     padding: 5rem 0;
     background-color: var(--bg-light);
 }
 
-.testimonial-slider {
-    padding-bottom: 3.5rem; /* Space for pagination */
+.testimonial-slider-home,
+.testimonial-slider-auto {
+    padding-bottom: 3.5rem;
 }
 
 .testimonial-card {
@@ -398,11 +518,12 @@ img {
     border: 1px solid var(--border-color);
     display: flex;
     flex-direction: column;
-    height: 100%; /* Ensure all slides have same height */
+    height: 100%;
+    min-height: 250px;
 }
 
 .testimonial-stars {
-    color: #f59e0b; /* Amber 500 */
+    color: #f59e0b;
     margin-bottom: 1.5rem;
     font-size: 1.125rem;
 }
@@ -411,7 +532,7 @@ img {
     font-size: 1.125rem;
     font-style: italic;
     color: var(--text-medium);
-    flex-grow: 1; /* Pushes author to bottom */
+    flex-grow: 1;
     margin-bottom: 1.5rem;
 }
 
@@ -431,7 +552,6 @@ img {
     font-size: 0.875rem;
 }
 
-/* Swiper pagination bullets */
 .swiper-pagination-bullet {
     background-color: var(--text-medium);
     width: 10px;
@@ -444,8 +564,7 @@ img {
     opacity: 1;
 }
 
-
-/* --- 8. Contact Section --- */
+/* Contact Section */
 .contact-section {
     padding: 5rem 0;
     background-color: var(--bg-white);
@@ -496,10 +615,10 @@ img {
     color: var(--text-dark);
 }
 
-/* --- 9. Footer --- */
+/* Footer */
 .footer {
     background-color: var(--bg-dark);
-    color: #d1d5db; /* Gray 300 */
+    color: #d1d5db;
     padding-top: 4rem;
 }
 
@@ -515,7 +634,7 @@ img {
 }
 
 .footer-col .logo-subtitle {
-    color: #9ca3af; /* Gray 400 */
+    color: #9ca3af;
 }
 
 .footer-bio {
@@ -536,7 +655,7 @@ img {
     height: 2.5rem;
     display: grid;
     place-items: center;
-    background-color: #374151; /* Gray 700 */
+    background-color: #374151;
     color: var(--bg-white);
     border-radius: 0.5rem;
     font-size: 1rem;
@@ -560,6 +679,7 @@ img {
 
 .footer-links a {
     font-size: 0.875rem;
+    cursor: pointer;
 }
 
 .footer-links a:hover {
@@ -584,14 +704,14 @@ img {
 }
 
 .footer-copyright {
-    border-top: 1px solid #374151; /* Gray 700 */
+    border-top: 1px solid #374151;
     padding: 2rem 0;
     text-align: center;
     font-size: 0.875rem;
-    color: #9ca3af; /* Gray 400 */
+    color: #9ca3af;
 }
 
-/* --- 10. Floating Action Buttons --- */
+/* Floating Action Buttons */
 .floating-buttons {
     position: fixed;
     bottom: 1.5rem;
@@ -603,13 +723,13 @@ img {
 }
 
 .float-btn {
-    width: 4rem;
-    height: 4rem;
+    width: 3.5rem;
+    height: 3.5rem;
     border-radius: 50%;
     display: grid;
     place-items: center;
     color: var(--bg-white);
-    font-size: 1.75rem;
+    font-size: 1.5rem;
     box-shadow: var(--shadow-lg);
     transition: all 0.3s ease;
     position: relative;
@@ -628,7 +748,6 @@ img {
     background: var(--gradient-primary);
 }
 
-/* Tooltip for floating buttons */
 .float-tooltip {
     position: absolute;
     right: 100%;
@@ -653,9 +772,7 @@ img {
     transform: translateY(-50%) translateX(-15px);
 }
 
-/* --- 11. Responsive Design (Media Queries) --- */
-
-/* Small tablets (min-width: 640px) */
+/* Responsive Design */
 @media (min-width: 640px) {
     .services-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -670,38 +787,53 @@ img {
     }
 
     .hero-title {
-        font-size: 4rem;
+        font-size: 3.5rem;
+    }
+
+    .stat-number {
+        font-size: 2.5rem;
     }
 }
 
-/* Standard tablets (min-width: 768px) */
 @media (min-width: 768px) {
     .menu-toggle {
-        display: none; /* Hide hamburger menu */
+        display: none;
     }
 
+    /* Hide the mobile slide-in menu */
     .mobile-menu {
-        display: none; /* Hide mobile menu */
+        display: none !important;
+    }
+    
+    /* Hide the new mobile-only tab bar */
+    .mobile-tab-bar {
+        display: none;
     }
 
+    /* Show the desktop centered tabs */
+    .service-tabs-wrapper {
+        display: block;
+    }
+
+    /* Show the desktop nav links */
     .nav-links {
-        display: flex; /* Show desktop links */
+        display: flex;
         align-items: center;
         gap: 0.5rem;
     }
 
     .nav-btn-desktop {
-        display: inline-flex; /* Show desktop call button */
-        margin-left: 1rem;
+        display: inline-flex;
+        margin-left: 0.5rem;
+    }
+    
+    /* Reset hero padding-top for desktop */
+    .hero {
+        padding-top: var(--navbar-height);
     }
 
-    .logo-text {
-        display: block; /* Ensure logo text is visible */
-    }
-
-    .testimonial-slider {
-        max-width: 90%;
-        margin: 0 auto;
+    .hero-title {
+        font-size: 4rem;
     }
 
     .footer-grid {
@@ -709,7 +841,6 @@ img {
     }
 }
 
-/* Laptops and desktops (min-width: 1024px) */
 @media (min-width: 1024px) {
     .services-grid {
         grid-template-columns: repeat(3, 1fr);
@@ -717,5 +848,24 @@ img {
     
     .hero-title {
         font-size: 4.5rem;
+    }
+
+    .nav-links {
+        gap: 0.75rem;
+    }
+
+    .nav-link {
+        font-size: 1rem;
+        padding: 0.5rem 1rem;
+    }
+
+    .nav-btn-desktop {
+        margin-left: 1rem;
+    }
+
+    .float-btn {
+        width: 4rem;
+        height: 4rem;
+        font-size: 1.75rem;
     }
 }
